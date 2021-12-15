@@ -10,6 +10,16 @@ import {
 	signOut,
 } from "firebase/auth";
 
+import { 
+	getFirestore,
+	collection,
+	addDoc,
+	getDocs,
+	updateDoc,
+	doc,
+	deleteDoc,
+} from 'firebase/firestore';
+
 // Your web app's Firebase configuration
 const firebaseConfig = {
 	apiKey: "AIzaSyD7WeqZZXrZOqhzhu7ERV7vdqRxNA1XHkU",
@@ -22,17 +32,31 @@ const firebaseConfig = {
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
+// Auth
 const auth = getAuth(app);
 const googleAuthProvider = new GoogleAuthProvider();
+// Firestore
+const db = getFirestore();
+
 
 export {
+	// Auth
 	auth,
+	createUserWithEmailAndPassword,
 	getAuth,
 	googleAuthProvider,
-	signInWithPopup,
-	createUserWithEmailAndPassword,
-	updateProfile,
-	signInWithEmailAndPassword,
 	onAuthStateChanged,
+	signInWithEmailAndPassword,
+	signInWithPopup,
 	signOut,
-}
+	updateProfile,
+	// Firestore
+	addDoc,
+	db,
+	collection,
+	getDocs,
+	updateDoc,
+	doc,
+	deleteDoc,
+};
+

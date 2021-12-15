@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from 'react'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
+import { useDispatch } from 'react-redux';
 
 import { onAuthStateChanged, auth } from '../firebase/firebase-config';
-
-import { AuthRouter } from './AuthRouter'
 import { JournalScreen } from '../components/journal/JournalScreen'
-import { useDispatch } from 'react-redux';
-import { login } from '../actions/auth';
+import { AuthRouter } from './AuthRouter'
 import { PublicRoute } from './PublicRoute';
 import { PrivateRoute } from './PrivateRoute';
+import { login } from '../actions/auth';
+import { startLoadingNotes } from '../actions/notes';
 
 export const AppRouter = () => {
 
@@ -18,10 +18,16 @@ export const AppRouter = () => {
 	const [isLoggedIn, setIsLoggedIn] = useState(false);
 
 	useEffect(() => {
-		onAuthStateChanged(auth, (user) => {
+		onAuthStateChanged(auth, async(user) => {
 			if ( user?.uid ) {
 				dispatch( login( user.uid, user.displayName ) );
 				setIsLoggedIn( true );
+
+				// const notes = await loadNotes( user.uid );
+				// dispatch( setNotes( notes ) )
+
+				dispatch( startLoadingNotes( user.uid ) );
+
 			} else {
 				setIsLoggedIn( false );
 			}
@@ -33,11 +39,9 @@ export const AppRouter = () => {
 
 	if ( checking ) {
 		return (
-			<h1>Cargando...</h1>
+			<h1>Loading...</h1>
 		)
 	}
-
-    console.log({ isLoggedIn });
 
 	return (
 		<BrowserRouter>

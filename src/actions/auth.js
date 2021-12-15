@@ -11,6 +11,7 @@ import {
 } from "../firebase/firebase-config";
 
 import { types } from "../types/types";
+import { notesLogoutCleaning, startLoadingNotes } from './notes';
 import { finishLoading, startLoading } from "./ui";
 
 /* 
@@ -87,6 +88,8 @@ export const startLogout = () => {
             .catch( console.log );
 
         dispatch( logout() );
+        dispatch( notesLogoutCleaning() );
+        
     }
 };
 

@@ -38,6 +38,15 @@
     }
 }
 
+.btn-danger {
+    background-color: rgb(226, 60, 60);
+    transition: all 300ms;
+
+    :hover {
+        background-color: darken($color: rgb(226, 60, 60), $amount: 10);
+    }
+}
+
 .btn-block {
     width: 100%;
 }
